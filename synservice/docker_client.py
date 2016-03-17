@@ -43,7 +43,7 @@ class DockerClient:
 
     def getDockerImages(self,url):
         value=os.popen("docker images")
-        """跳过第一行的表头信息"""
+        #skip file line
         value.readline();
         lines=value.readlines();
         imageList=[]
