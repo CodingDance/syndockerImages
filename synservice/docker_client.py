@@ -9,12 +9,18 @@ class DockerClient:
     def __init__(self):
         pass
 
+    def startDockerService(self):
+        success=os.system("service docker start")
+        if success==0:
+            return True
+        return False
 
     def pullDockerRepo(self,reponame,version):
         success=os.system("docker pull "+reponame+":"+version)
         if success==0:
             return True
         return False
+
 
 
     def loginDocker(self,username,password,email,url):

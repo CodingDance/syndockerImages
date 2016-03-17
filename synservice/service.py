@@ -6,25 +6,32 @@ __author__ = 'hzyiting'
 
 
 def main():
+
     # read config file
     cp=configparser.RawConfigParser()
     cp.read("config.conf")
+
+    #read docker config
     docker_repo=cp.get("docker","docker_repo")
     docker_username=cp.get("docker","docker_username")
     docker_password=cp.get("docker","docker_password")
     docker_email=cp.get("docker","docker_email")
     docker_nickname=cp.get("docker","docker_nickname")
 
+    #read git config
+    git_repo=cp.get("git","git_repo")
+    git_dir=cp.get("git","git_dir")
 
+    #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
-    gitClient.pullRepo("https://github.com/yiting1122/official-images.git", "official-images")
-    dockerRepoVersionMaps = gitClient.getDockerRepoVersion("official-images/library")
+    gitClient.pullRepo(git_repo, git_dir)
 
-    # nickname = "nce_dev"
-    # url = "localhost:5000"
+    #read docker repo version map from the git_pro file
+    dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
 
+    #docker client
     dockerClient = DockerClient()
-
+    dockerClient.startDockerService()
     for key in dockerRepoVersionMaps.keys():
         versions = dockerRepoVersionMaps[key]
         for version in versions:
