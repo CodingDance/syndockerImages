@@ -13,7 +13,7 @@
 - install pip: "sudo apt-get install python-pip"
 - install configobj: "install configobj"
 - install daomonit: "curl -L -o /tmp/daomonit_amd64.deb https://get.daocloud.io/daomonit/daomonit_amd64.deb
-sudo dpkg -i /tmp/daomonit_amd64.deb"
+- sudo dpkg -i /tmp/daomonit_amd64.deb"
 
 
 ###config daomonit ,so you can use dao cmd to speed pull images

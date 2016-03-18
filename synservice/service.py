@@ -33,16 +33,12 @@ def main():
     git_repo=config["git"]["git_repo"]
     git_dir=config["git"]["git_dir"]
 
-
-
     #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
     gitClient.pullRepo(git_repo, git_dir)
 
     #read docker repo version map from the git_pro file
     dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
-
-
 
     #docker client
     dockerClient = DockerClient()
@@ -54,7 +50,6 @@ def main():
     if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_repo) is not True:
         print("login error")
         exit(1)
-
 
     for key in dockerRepoVersionMaps.keys():
         versions = dockerRepoVersionMaps[key]
