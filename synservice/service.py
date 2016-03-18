@@ -48,7 +48,11 @@ def main():
     for key in dockerRepoVersionMaps.keys():
         versions = dockerRepoVersionMaps[key]
         for version in versions:
-            if dockerClient.pullDockerRepo(key, version):
+            #pull image from offcial
+            #if dockerClient.pullDockerRepo(key, version):
+
+            #pull image from daocloud,be sure you install the dao cmd from daocloud
+            if dockerClient.pullDockerRepoFromDaoCloud(key,version):
                 dockerClient.tagDockerRepo(key, version,  docker_repo,docker_nickname)
             else:
                 print("docker pull repo failed: " + key + ":" + version)
