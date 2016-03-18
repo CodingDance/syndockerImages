@@ -42,9 +42,20 @@ def main():
     #read docker repo version map from the git_pro file
     dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
 
+
+
     #docker client
     dockerClient = DockerClient()
+
+    # start docker service
     dockerClient.startDockerService()
+
+    # login docker
+    if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_repo) is not True:
+        print("login error")
+        exit(1)
+
+
     for key in dockerRepoVersionMaps.keys():
         versions = dockerRepoVersionMaps[key]
         for version in versions:
@@ -53,17 +64,19 @@ def main():
 
             #pull image from daocloud,be sure you install the dao cmd from daocloud
             if dockerClient.pullDockerRepoFromDaoCloud(key,version):
-                dockerClient.tagDockerRepo(key, version,  docker_repo,docker_nickname)
+                imageUrl = dockerClient.tagDockerRepo(key, version, docker_repo, docker_nickname)
+                if imageUrl != "":
+                    dockerClient.pushDockerRepo(imageUrl)
             else:
                 print("docker pull repo failed: " + key + ":" + version)
 
-    imageList = dockerClient.getDockerImages(docker_repo)
-    if len(imageList) > 0:
-        if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_repo):
-            for image in imageList:
-                dockerClient.pushDockerRepo(image)
-        else:
-            print("login error")
+                # imageList = dockerClient.getDockerImages(docker_repo)
+                # if len(imageList) > 0:
+                # if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_repo):
+                # for image in imageList:
+                # dockerClient.pushDockerRepo(image)
+                #     else:
+                #         print("login error")
 
 
 print("update success")

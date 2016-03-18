@@ -36,10 +36,11 @@ class DockerClient:
         return False
 
     def tagDockerRepo(self,reponame,version,url,nickname):
-        success=os.system("docker tag "+reponame+":"+version+" "+url+"/"+nickname+"/"+reponame+":"+version)
+        repoUrl = url + "/" + nickname + "/" + reponame + ":" + version
+        success = os.system("docker tag " + reponame + ":" + version + " " + repoUrl)
         if success==0:
-            return True
-        return False
+            return repoUrl
+        return ""
 
     def pushDockerRepo(self,imageUrl):
         success=os.system("docker push "+imageUrl)
@@ -81,7 +82,7 @@ class DockerClient:
             imageId=imageInfo[2]
             print(imageId)
             imageIdsList.append(imageId)
-        return imageIdsList
+        return set(imageIdsList)  # use set to delete some same imageids
 
 
     #rmi docker images by Id
