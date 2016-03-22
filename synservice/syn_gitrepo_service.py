@@ -14,7 +14,7 @@ def main():
     # cp.read("config.conf")
     #
     # #read docker config
-    # docker_repo=cp.get("docker","docker_repo")
+    # docker_registry=cp.get("docker","docker_registry")
     # docker_username=cp.get("docker","docker_username")
     # docker_password=cp.get("docker","docker_password")
     # docker_email=cp.get("docker","docker_email")
@@ -25,7 +25,7 @@ def main():
     # git_dir=cp.get("git","git_dir")
 
     config = ConfigObj("config.conf")
-    docker_repo=config["docker"]["docker_repo"]
+    docker_registry=config["docker"]["docker_registry"]
     docker_username=config["docker"]["docker_username"]
     docker_password=config["docker"]["docker_password"]
     docker_email=config["docker"]["docker_email"]
@@ -47,7 +47,7 @@ def main():
     dockerClient.startDockerService()
 
     # login docker
-    if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_repo) is not True:
+    if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_registry) is not True:
         print("login error")
         exit(1)
 
@@ -59,15 +59,15 @@ def main():
 
             #pull image from daocloud,be sure you install the dao cmd from daocloud
             if dockerClient.pullDockerRepoFromDaoCloud(key,version):
-                imageUrl = dockerClient.tagDockerRepo(key, version, docker_repo, docker_nickname)
+                imageUrl = dockerClient.tagDockerRepo(key, version, docker_registry, docker_nickname)
                 if imageUrl != "":
                     dockerClient.pushDockerRepo(imageUrl)
             else:
                 print("docker pull repo failed: " + key + ":" + version)
 
-                # imageList = dockerClient.getDockerImages(docker_repo)
+                # imageList = dockerClient.getDockerImages(docker_registry)
                 # if len(imageList) > 0:
-                # if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_repo):
+                # if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_registry):
                 # for image in imageList:
                 # dockerClient.pushDockerRepo(image)
                 #     else:
