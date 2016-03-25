@@ -81,9 +81,9 @@ def main():
                 #         print("login error")
         service=HttpService()
         desc_result=service.getRepoDesc(key)
-        shortdesc=desc_result["shortdesc"]
+        shortdesc=desc_result["shortDesc"]
         print("shortdesc:"+shortdesc)
-        longdesc=desc_result["longdesc"]
+        longdesc=desc_result["longDesc"]
         print("longdesc:"+longdesc)
         service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
         service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
