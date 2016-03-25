@@ -24,15 +24,15 @@ class HttpService:
             httpClient.request('GET', '/r/library/' + repoName + '/')
             response = httpClient.getresponse()
             print response.status
-            if response.status!="200":
-                return ""
+            if response.status!=200:
+                return desc_result
 
             value = response.read()
             shortDescStart = string.find(value, self.ShortDescStarter) + len(self.ShortDescEnder)
             shortDescEnd = string.find(value, self.ShortDescEnder)
             shortDesc = value[shortDescStart:shortDescEnd]
 
-            desc_result={}
+
             desc_result["shortDesc"] = shortDesc
 
             longDescStart = string.find(value, self.LongDescStarter) + len(self.LongDescEnder)
@@ -104,20 +104,14 @@ class HttpService:
                 httpClient.close()
 
 
-    def getTest(self):
-        httpClient = httplib.HTTPSConnection(host="hub.docker.com", timeout=60)
-        httpClient.request('GET', '/explorer/' )
-        response = httpClient.getresponse()
-        print response.status
-        print response.read()
 
 
 
 if __name__ == '__main__':
     service = HttpService()
-    # service.getRepoDesc("ubuntu")
+    result=service.getRepoDesc("ubuntu")
+    print(result["shortDesc"])
     #service.synRepoDesc("c.163.com/api/internal/repo/desc","yiting","ubuntu","hello","helloworld")
-    service.getTest()
 
 
 
