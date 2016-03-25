@@ -3,6 +3,8 @@ from git_cmd import GitClient
 
 #import configparser
 from configobj import ConfigObj
+from http_service import HttpService
+
 
 __author__ = 'hzyiting'
 
@@ -30,8 +32,13 @@ def main():
     docker_password=config["docker"]["docker_password"]
     docker_email=config["docker"]["docker_email"]
     docker_nickname=config["docker"]["docker_nickname"]
+
     git_repo=config["git"]["git_repo"]
     git_dir=config["git"]["git_dir"]
+
+    netease_info=config["info"]["netease_info"]
+    netease_test=config["info"]["netease_test"]
+    netease_liantiao=config["info"]["netease_liantiao"]
 
     #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
@@ -72,6 +79,14 @@ def main():
                 # dockerClient.pushDockerRepo(image)
                 #     else:
                 #         print("login error")
+        service=HttpService()
+        desc_result=service.getRepoDesc(key)
+        shortdesc=desc_result["shortdesc"]
+        print("shortdesc:"+shortdesc)
+        longdesc=desc_result["longdesc"]
+        print("longdesc:"+longdesc)
+        service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
+        service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
 
 
 print("update success")
