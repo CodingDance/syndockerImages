@@ -32,6 +32,7 @@ class HttpService:
             shortDescEnd = string.find(value, self.ShortDescEnder)
             shortDesc = value[shortDescStart:shortDescEnd]
 
+            desc_result={}
             desc_result["shortDesc"] = shortDesc
 
             longDescStart = string.find(value, self.LongDescStarter) + len(self.LongDescEnder)
