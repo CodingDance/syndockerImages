@@ -20,11 +20,12 @@ class HttpService:
 
         httpClient = None
         try:
-            httpClient = httplib.HTTPSConnection(host='hub.docker.com', timeout=30)
+            httpClient = httplib.HTTPSConnection(host='hub.docker.com', timeout=200)
             httpClient.request('GET', '/r/library/' + repoName + '/')
             response = httpClient.getresponse()
             print response.status
             if response.status!=200:
+                print "=====dockerhub get desc ERROR========"
                 return desc_result
 
             value = response.read()
@@ -62,17 +63,18 @@ class HttpService:
             print(index)
             hostname=url[0:index]
             requesturl=url[index:]
-            httpClient = httplib.HTTPConnection(host=hostname, timeout=30)
+            httpClient = httplib.HTTPConnection(host=hostname, timeout=200)
             headers = {"Content-type": "application/json", "Accept": "text/plain"}
             object={"username":username,"repoName":repoName,"basicDesc":basicDesc,"detailDesc":detailDesc}
             jsonValue=json.dumps(object)
             httpClient.request("POST", requesturl, jsonValue, headers)
             response=httpClient.getresponse()
             print response.status
-            if response.status=="200":
+            if response.status==200:
                 print response.read()
                 return True
             else:
+                print "=====update desc to netease ERROR========"
                 return False
         except Exception, e:
             print e
@@ -88,7 +90,7 @@ class HttpService:
             print(index)
             hostname=url[0:index]
             requesturl=url[index:]
-            httpClient = httplib.HTTPSConnection(host=hostname, timeout=30)
+            httpClient = httplib.HTTPSConnection(host=hostname, timeout=200)
             headers = {"Content-type": "application/json", "Accept": "text/plain"}
             object={"username":username,"repoName":repoName,"basicDesc":basicDesc,"detailDesc":detailDesc}
             jsonValue=json.dumps(object)
@@ -96,10 +98,11 @@ class HttpService:
             response=httpClient.getresponse()
             print response.status
 
-            if response.status=="200":
+            if response.status==200:
                 print response.read()
                 return True
             else:
+                print "=====update desc to netease ERROR========"
                 return False
         except Exception, e:
             print e
