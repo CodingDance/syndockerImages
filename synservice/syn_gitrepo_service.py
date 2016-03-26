@@ -92,7 +92,7 @@ def main():
             longdesc=desc_result["longDesc"]
         print("longdesc:"+longdesc)
 
-        service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
+        # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
         service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
 
 

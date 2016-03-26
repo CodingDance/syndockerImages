@@ -56,11 +56,12 @@ class HttpService:
 
 
     def synRepoDescHttp(self,url,username,repoName,basicDesc,detailDesc):
+        httpClient = None
         try:
-            index=url.index(".com")
+            index=url.index("/")
             print(index)
-            hostname=url[0:index+4]
-            requesturl=url[index+4:]
+            hostname=url[0:index]
+            requesturl=url[index:]
             httpClient = httplib.HTTPConnection(host=hostname, timeout=30)
             headers = {"Content-type": "application/json", "Accept": "text/plain"}
             object={"username":username,"repoName":repoName,"basicDesc":basicDesc,"detailDesc":detailDesc}
@@ -69,6 +70,7 @@ class HttpService:
             response=httpClient.getresponse()
             print response.status
             if response.status=="200":
+                print response.read()
                 return True
             else:
                 return False
@@ -80,11 +82,12 @@ class HttpService:
                 httpClient.close()
 
     def synRepoDescHttps(self,url,username,repoName,basicDesc,detailDesc):
+        httpClient = None
         try:
-            index=url.index(".com")
+            index=url.index("/")
             print(index)
-            hostname=url[0:index+4]
-            requesturl=url[index+4:]
+            hostname=url[0:index]
+            requesturl=url[index:]
             httpClient = httplib.HTTPSConnection(host=hostname, timeout=30)
             headers = {"Content-type": "application/json", "Accept": "text/plain"}
             object={"username":username,"repoName":repoName,"basicDesc":basicDesc,"detailDesc":detailDesc}
@@ -92,7 +95,9 @@ class HttpService:
             httpClient.request("POST", requesturl, jsonValue, headers)
             response=httpClient.getresponse()
             print response.status
+
             if response.status=="200":
+                print response.read()
                 return True
             else:
                 return False
@@ -109,9 +114,9 @@ class HttpService:
 
 if __name__ == '__main__':
     service = HttpService()
-    result=service.getRepoDesc("ubuntu")
-    print(result["shortDesc"])
-    #service.synRepoDesc("c.163.com/api/internal/repo/desc","yiting","ubuntu","hello","helloworld")
+    # result=service.getRepoDesc("ubuntu")
+    # print(result["shortDesc"])
+    service.synRepoDescHttp("10.180.148.99:8184/api/internal/repo/desc","yiting","ubuntu","hello","helloworld")
 
 
 
