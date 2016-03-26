@@ -38,9 +38,9 @@ class DockerClient:
     def tagDockerRepo(self,reponame,version,url,nickname):
         repoUrl = url + "/" + nickname + "/" + reponame + ":" + version
         success = os.system("docker tag " + reponame + ":" + version + " " + repoUrl)
-        if success==0:
-            return repoUrl
-        return ""
+        # if success==0:
+        #     return repoUrl
+        return repoUrl
 
     def pushDockerRepo(self,imageUrl):
         success=os.system("docker push "+imageUrl)
