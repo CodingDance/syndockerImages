@@ -84,6 +84,7 @@ def main():
             #pull image from daocloud,be sure you install the dao cmd from daocloud
             if dockerClient.pullDockerRepoFromDaoCloud(key,version):
                 imageUrl = dockerClient.tagDockerRepo(key, version, docker_registry, docker_nickname)
+                print "imagesURL========"+imageUrl
                 if imageUrl != "":
                     dockerClient.pushDockerRepo(imageUrl)
             else:
