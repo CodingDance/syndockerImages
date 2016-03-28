@@ -67,11 +67,8 @@ def main():
         print("login error")
         exit(1)
 
-
-
-
     for key in dockerRepoVersionMaps.keys() :
-        if imageNames[key]=="":
+        if imageNames.has_key(key)==False:
             print key +"is not exist in image.txt file"
             continue
         versions = dockerRepoVersionMaps[key]
