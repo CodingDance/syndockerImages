@@ -1,5 +1,6 @@
 from docker_client import DockerClient
 from git_cmd import GitClient
+import os
 
 #import configparser
 from configobj import ConfigObj
@@ -47,6 +48,14 @@ def main():
     #read docker repo version map from the git_pro file
     dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
 
+
+    imageFile=open('image.txt')
+    imageNames={}
+    for imageName in imageFile.readlines():
+        imageName = imageName.strip()
+        imageNames[imageName]=imageName
+
+
     #docker client
     dockerClient = DockerClient()
 
@@ -58,24 +67,13 @@ def main():
         print("login error")
         exit(1)
 
-    for key in dockerRepoVersionMaps.keys():
 
-        # service=HttpService()
-        # desc_result=service.getRepoDesc(key)
-        #
-        # shortdesc=""
-        # if desc_result.has_key("shortDesc"):
-        #     shortdesc=desc_result["shortDesc"]
-        # print("shortdesc:"+shortdesc)
-        #
-        # longdesc=""
-        # if desc_result.has_key("longDesc"):
-        #     longdesc=desc_result["longDesc"]
-        # print("longdesc:"+longdesc)
-        #
-        # # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
-        # service.synRepoDescHttp(netease_liantiao,"nce_dev",key,shortdesc,longdesc)
 
+
+    for key in dockerRepoVersionMaps.keys() :
+        if imageNames[key]=="":
+            print key +"is not exist in image.txt file"
+            continue
         versions = dockerRepoVersionMaps[key]
         for version in versions:
             #pull image from offcial
@@ -97,21 +95,21 @@ def main():
                 # dockerClient.pushDockerRepo(image)
                 #     else:
                 #         print("login error")
-        service=HttpService()
-        desc_result=service.getRepoDesc(key)
-
-        shortdesc=""
-        if desc_result.has_key("shortDesc"):
-            shortdesc=desc_result["shortDesc"]
-        print("shortdesc:"+shortdesc)
-
-        longdesc=""
-        if desc_result.has_key("longDesc"):
-            longdesc=desc_result["longDesc"]
-        print("longdesc:"+longdesc)
-
-        # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
-        service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
+        # service=HttpService()
+        # desc_result=service.getRepoDesc(key)
+        #
+        # shortdesc=""
+        # if desc_result.has_key("shortDesc"):
+        #     shortdesc=desc_result["shortDesc"]
+        # print("shortdesc:"+shortdesc)
+        #
+        # longdesc=""
+        # if desc_result.has_key("longDesc"):
+        #     longdesc=desc_result["longDesc"]
+        # print("longdesc:"+longdesc)
+        #
+        # # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
+        # service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
 
 
 print("update success")
