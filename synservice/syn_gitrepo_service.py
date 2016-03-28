@@ -60,21 +60,21 @@ def main():
 
     for key in dockerRepoVersionMaps.keys():
 
-        service=HttpService()
-        desc_result=service.getRepoDesc(key)
-
-        shortdesc=""
-        if desc_result.has_key("shortDesc"):
-            shortdesc=desc_result["shortDesc"]
-        print("shortdesc:"+shortdesc)
-
-        longdesc=""
-        if desc_result.has_key("longDesc"):
-            longdesc=desc_result["longDesc"]
-        print("longdesc:"+longdesc)
-
-        # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
-        service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
+        # service=HttpService()
+        # desc_result=service.getRepoDesc(key)
+        #
+        # shortdesc=""
+        # if desc_result.has_key("shortDesc"):
+        #     shortdesc=desc_result["shortDesc"]
+        # print("shortdesc:"+shortdesc)
+        #
+        # longdesc=""
+        # if desc_result.has_key("longDesc"):
+        #     longdesc=desc_result["longDesc"]
+        # print("longdesc:"+longdesc)
+        #
+        # # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
+        # service.synRepoDescHttp(netease_liantiao,"nce_dev",key,shortdesc,longdesc)
 
         versions = dockerRepoVersionMaps[key]
         for version in versions:

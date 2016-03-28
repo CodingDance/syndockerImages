@@ -118,8 +118,9 @@ class HttpService:
 if __name__ == '__main__':
     service = HttpService()
     # result=service.getRepoDesc("ubuntu")
+    # result=service.getRepoDesc("ubuntu")
     # print(result["shortDesc"])
-    service.synRepoDescHttp("10.180.148.99:8184/api/internal/repo/desc","yiting","ubuntu","hello","helloworld")
+    service.synRepoDescHttp("10.180.148.95:10089/api/internal/repo/desc","nce_dev","busybox","hello","helloworld")
 
 
 
