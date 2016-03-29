@@ -29,14 +29,14 @@ class HttpService:
                 return desc_result
 
             value = response.read()
-            shortDescStart = string.find(value, self.ShortDescStarter) + len(self.ShortDescEnder)
+            shortDescStart = string.find(value, self.ShortDescStarter) + len(self.ShortDescStarter)
             shortDescEnd = string.find(value, self.ShortDescEnder)
             shortDesc = value[shortDescStart:shortDescEnd]
 
 
             desc_result["shortDesc"] = shortDesc
 
-            longDescStart = string.find(value, self.LongDescStarter) + len(self.LongDescEnder)
+            longDescStart = string.find(value, self.LongDescStarter) + len(self.LongDescStarter)
             longDescEnd = string.find(value, self.LongDescEnder)
             longDesc = value[longDescStart:longDescEnd]
             longDesc = string.replace(longDesc, "\\n", "\n", -1)

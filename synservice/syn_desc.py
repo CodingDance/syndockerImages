@@ -28,7 +28,7 @@ def main():
 
     #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
-    gitClient.pullRepo(git_repo, git_dir)
+   # gitClient.pullRepo(git_repo, git_dir)
 
     #read docker repo version map from the git_pro file
     dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
