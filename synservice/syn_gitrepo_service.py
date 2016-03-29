@@ -83,21 +83,21 @@ def main():
                     dockerClient.pushDockerRepo(imageUrl)
             else:
                 print("docker pull repo failed: " + key + ":" + version)
-        # service=HttpService()
-        # desc_result=service.getRepoDesc(key)
-        #
-        # shortdesc=""
-        # if desc_result.has_key("shortDesc"):
-        #     shortdesc=desc_result["shortDesc"]
-        # print("shortdesc:"+shortdesc)
-        #
-        # longdesc=""
-        # if desc_result.has_key("longDesc"):
-        #     longdesc=desc_result["longDesc"]
-        # print("longdesc:"+longdesc)
-        #
-        # # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
-        # service.synRepoDescHttp(netease_liantiao,"library",key,shortdesc,longdesc)
+        service=HttpService()
+        desc_result=service.getRepoDesc(key)
+
+        shortdesc=""
+        if desc_result.has_key("shortDesc"):
+            shortdesc=desc_result["shortDesc"]
+        print("shortdesc:"+shortdesc)
+
+        longdesc=""
+        if desc_result.has_key("longDesc"):
+            longdesc=desc_result["longDesc"]
+        print("longdesc:"+longdesc)
+
+        # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
+        service.synRepoDescHttps(netease_info,"library",key,shortdesc,longdesc)
 
 
 print("update success")
