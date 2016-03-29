@@ -28,4 +28,3 @@ gcc
 nginx
 cassandra
 java
-redis
