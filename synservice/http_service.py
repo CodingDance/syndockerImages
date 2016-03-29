@@ -93,7 +93,7 @@ class HttpService:
             requesturl=url[index:]
             httpClient = httplib.HTTPSConnection(host=hostname, timeout=200)
             headers = {"Content-type": "application/json", "Accept": "text/plain"}
-            object={"username":username,"repoName":repoName,"basicDesc":basicDesc,"detailDesc":detailDesc}
+            object={"username":username,"repoName":repoName,"baseDesc":basicDesc,"detailDesc":detailDesc}
             jsonValue=json.dumps(object)
             httpClient.request("POST", requesturl, jsonValue, headers)
             response=httpClient.getresponse()
