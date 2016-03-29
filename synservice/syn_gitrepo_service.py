@@ -75,7 +75,6 @@ def main():
         for version in versions:
             #pull image from offcial
             #if dockerClient.pullDockerRepo(key, version):
-
             #pull image from daocloud,be sure you install the dao cmd from daocloud
             if dockerClient.pullDockerRepoFromDaoCloud(key,version):
                 imageUrl = dockerClient.tagDockerRepo(key, version, docker_registry, docker_nickname)
@@ -84,14 +83,6 @@ def main():
                     dockerClient.pushDockerRepo(imageUrl)
             else:
                 print("docker pull repo failed: " + key + ":" + version)
-
-                # imageList = dockerClient.getDockerImages(docker_registry)
-                # if len(imageList) > 0:
-                # if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_registry):
-                # for image in imageList:
-                # dockerClient.pushDockerRepo(image)
-                #     else:
-                #         print("login error")
         # service=HttpService()
         # desc_result=service.getRepoDesc(key)
         #
