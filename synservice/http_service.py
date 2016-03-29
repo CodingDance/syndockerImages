@@ -71,6 +71,7 @@ class HttpService:
             response=httpClient.getresponse()
             print response.status
             if response.status==200:
+                print "update desc sucess for :"+repoName
                 print response.read()
                 return True
             else:
@@ -99,6 +100,7 @@ class HttpService:
             print response.status
 
             if response.status==200:
+                print "update desc sucess for :"+repoName
                 print response.read()
                 return True
             else:
