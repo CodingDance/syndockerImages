@@ -5,6 +5,8 @@ import os
 def main():
     imageFile=open('image.txt')
     url="https://hub.docker.com/public/images/official/"
+    os.mkdir("pictures")
+    os.chdir("pictures")
     for imageName in imageFile.readlines():
         imageName = imageName.strip()
         imageUrl=url+imageName+".png"
