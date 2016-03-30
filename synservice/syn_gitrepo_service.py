@@ -86,6 +86,7 @@ def main():
         service=HttpService()
         desc_result=service.getRepoDesc(key)
 
+
         shortdesc=""
         if desc_result.has_key("shortDesc"):
             shortdesc=desc_result["shortDesc"]

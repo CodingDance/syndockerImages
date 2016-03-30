@@ -50,7 +50,7 @@ class HttpService:
 
         except Exception, e:
             print e
-            return ""
+            return {}
         finally:
             if httpClient:
                 httpClient.close()
