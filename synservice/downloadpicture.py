@@ -3,7 +3,7 @@ import os
 
 
 def main():
-    imageFile=open('image.txt')
+    imageFile=open('picture.txt')
     url="https://hub.docker.com/public/images/official/"
     os.mkdir("pictures")
     os.chdir("pictures")

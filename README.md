@@ -19,3 +19,5 @@
 ###config daomonit ,so you can use dao cmd to speed pull images
 - sudo daomonit -token=e3240fa65bed6b4c4c5585c348a95cc5a6c17db1 save-config
 - sudo service daomonit start
+
+
