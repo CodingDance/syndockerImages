@@ -1,0 +1,16 @@
+buildpack-deps
+nats
+hipache
+kibana
+glassfish
+mono
+erlang
+alpine
+aerospike
+couchbase
+joomla
+nuxeo
+neurodebian
+gazebo
+odoo
+notary

@@ -5,8 +5,10 @@ import os
 def main():
     imageFile=open('picture.txt')
     url="https://hub.docker.com/public/images/official/"
-    os.mkdir("pictures")
-    os.chdir("pictures")
+    dirname="pictures"
+    if os.path.exists(dirname)==False:
+        os.mkdir(dirname)
+    os.chdir(dirname)
     for imageName in imageFile.readlines():
         imageName = imageName.strip()
         imageUrl=url+imageName+".png"
