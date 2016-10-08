@@ -71,14 +71,14 @@ def main():
 
     for key in dockerRepoVersionMaps.keys() :
         if imageNames.has_key(key)==True:
-            print key +"is not exist in image.txt file"
+            print key +"is exist in image.txt file,no need to update"
             continue
         versions = dockerRepoVersionMaps[key]
         for version in versions:
             #pull image from offcial
-            #if dockerClient.pullDockerRepo(key, version):
-            #pull image from daocloud,be sure you install the dao cmd from daocloud
-            if dockerClient.pullDockerRepoFromDaoCloud(key,version):
+            print "version:"+version
+            print "key:"+key
+            if dockerClient.pullDockerRepo(key, version):
                 imageUrl = dockerClient.tagDockerRepo(key, version, docker_registry, docker_nickname)
                 print "imagesURL========"+imageUrl
                 if imageUrl != "":
