@@ -43,17 +43,19 @@ def main():
 
     #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
-    # gitClient.pullRepo(git_repo, git_dir)
+    gitClient.pullRepo(git_repo, git_dir)
 
     #read docker repo version map from the git_pro file
     dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
 
 
     imageFile=open('image.txt')
+    resultFile=open('result.txt','w+')
     imageNames={}
     for imageName in imageFile.readlines():
         imageName = imageName.strip()
         imageNames[imageName]=imageName
+
 
 
     #docker client
@@ -68,7 +70,7 @@ def main():
         exit(1)
 
     for key in dockerRepoVersionMaps.keys() :
-        if imageNames.has_key(key)==False:
+        if imageNames.has_key(key)==True:
             print key +"is not exist in image.txt file"
             continue
         versions = dockerRepoVersionMaps[key]
@@ -99,6 +101,11 @@ def main():
 
         # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
         service.synRepoDescHttps(netease_info,"library",key,shortdesc,longdesc)
+        resultFile.write(key)
+        resultFile.write("\n")
+        resultFile.flush()
+    resultFile.close()
+
 
 
 print("update success")

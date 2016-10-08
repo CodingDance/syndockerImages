@@ -28,13 +28,14 @@ def main():
 
     #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
-   # gitClient.pullRepo(git_repo, git_dir)
+    gitClient.pullRepo(git_repo, git_dir)
 
     #read docker repo version map from the git_pro file
     dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
+    needToUpdateRepoFlieList=gitClient.getUpdateRepoFileList(git_dir)
 
 
-    imageFile=open('image.txt')
+    imageFile=open('image_desc.txt')
     imageNames={}
     for imageName in imageFile.readlines():
         imageName = imageName.strip()
@@ -42,34 +43,34 @@ def main():
 
 
     # #docker client
-    # dockerClient = DockerClient()
+    dockerClient = DockerClient()
     #
     # # start docker service
-    # dockerClient.startDockerService()
+    dockerClient.startDockerService()
     #
     # # login docker
-    # if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_registry) is not True:
-    #     print("login error")
-    #     exit(1)
+    if dockerClient.loginDocker(docker_username, docker_password, docker_email, docker_registry) is not True:
+        print("login error")
+        exit(1)
 
-    for key in dockerRepoVersionMaps.keys() :
-        if imageNames.has_key(key)==False:
-            print key +"is not exist in image.txt file"
+
+    for updateRepoName in needToUpdateRepoFlieList:
+        if imageNames.has_key(updateRepoName)==True:
+            print updateRepoName +"is  exist in image.txt file,no need to update"
             continue
-        # versions = dockerRepoVersionMaps[key]
-        # for version in versions:
-        #     #pull image from offcial
-        #     #if dockerClient.pullDockerRepo(key, version):
-        #     #pull image from daocloud,be sure you install the dao cmd from daocloud
-        #     if dockerClient.pullDockerRepoFromDaoCloud(key,version):
-        #         imageUrl = dockerClient.tagDockerRepo(key, version, docker_registry, docker_nickname)
-        #         print "imagesURL========"+imageUrl
-        #         if imageUrl != "":
-        #             dockerClient.pushDockerRepo(imageUrl)
-        #     else:
-        #         print("docker pull repo failed: " + key + ":" + version)
+
+        versions = dockerRepoVersionMaps[updateRepoName]
+        for version in versions:
+            if dockerClient.pullDockerRepo(updateRepoName, version):
+                imageUrl = dockerClient.tagDockerRepo(updateRepoName, version, docker_registry, docker_nickname)
+                print "imagesURL========"+imageUrl
+                if imageUrl != "":
+                    dockerClient.pushDockerRepo(imageUrl)
+            else:
+                print("docker pull repo failed: " + updateRepoName + ":" + version)
+
         service=HttpService()
-        desc_result=service.getRepoDesc(key)
+        desc_result=service.getRepoDesc(updateRepoName)
 
         shortdesc=""
         if desc_result.has_key("shortDesc"):
@@ -82,7 +83,7 @@ def main():
         print("longdesc:"+longdesc)
 
         # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
-        service.synRepoDescHttps(netease_info,"library",key,shortdesc,longdesc)
+        service.synRepoDescHttps(netease_info,"library",updateRepoName,shortdesc,longdesc)
 
 
 print("update success")
