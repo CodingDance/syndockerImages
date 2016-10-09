@@ -17,33 +17,41 @@ class GitClient:
         os.system('git clone ' + gitpath)
 
     def pullRepo(self, gitpath, filename):
+        ret = False
         pwd = os.getcwd()
         print(pwd)
         if os.path.exists(filename) == False:
             self.cloneRepo(gitpath)
         else:
             os.chdir(filename)
-            os.system('git pull')
-        os.chdir(pwd)
+            value = os.popen('git pull')
+            lines = value.readlines()
+            print(lines)
+            for line in lines:
+                if line.strip().find("Already up-to-date") != -1:
+                    print("this git repo is the latest repo")
+                    ret = True;
 
+        os.chdir(pwd)
+        return ret
 
     def getUpdateRepoFileList(self, filename):
         pwd = os.getcwd()
         print(pwd)
-	print(filename)
+        print(filename)
         updateRepoFileList = []
         if os.path.exists(filename) == True:
             os.chdir(filename)
             value = os.popen("git diff --name-status HEAD~1 HEAD~2")
             lines = value.readlines()
-	    print(lines)
+            print(lines)
             for line in lines:
-		print(line)
-		line =line.strip()
+                print(line)
+                line = line.strip()
                 temp = line.rpartition("/")
                 updateRepoFileList.append(temp[2])
         os.chdir(pwd)
-	print "over!"
+        print "over!"
         return updateRepoFileList;
 
 

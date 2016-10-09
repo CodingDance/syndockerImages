@@ -1,8 +1,7 @@
 from docker_client import DockerClient
 from git_cmd import GitClient
-import os
 
-#import configparser
+# import configparser
 from configobj import ConfigObj
 from http_service import HttpService
 
@@ -11,35 +10,33 @@ __author__ = 'hzyiting'
 
 
 def main():
-
     config = ConfigObj("config.conf")
-    docker_registry=config["docker"]["docker_registry"]
-    docker_username=config["docker"]["docker_username"]
-    docker_password=config["docker"]["docker_password"]
-    docker_email=config["docker"]["docker_email"]
-    docker_nickname=config["docker"]["docker_nickname"]
+    docker_registry = config["docker"]["docker_registry"]
+    docker_username = config["docker"]["docker_username"]
+    docker_password = config["docker"]["docker_password"]
+    docker_email = config["docker"]["docker_email"]
+    docker_nickname = config["docker"]["docker_nickname"]
 
-    git_repo=config["git"]["git_repo"]
-    git_dir=config["git"]["git_dir"]
+    git_repo = config["git"]["git_repo"]
+    git_dir = config["git"]["git_dir"]
 
-    netease_info=config["info"]["netease_info"]
-    netease_test=config["info"]["netease_test"]
-    netease_liantiao=config["info"]["netease_liantiao"]
+    netease_info = config["info"]["netease_info"]
+    netease_test = config["info"]["netease_test"]
+    netease_liantiao = config["info"]["netease_liantiao"]
 
     #git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
     gitClient.pullRepo(git_repo, git_dir)
 
     #read docker repo version map from the git_pro file
-    dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir+"/library")
-    needToUpdateRepoFlieList=gitClient.getUpdateRepoFileList(git_dir)
+    dockerRepoVersionMaps = gitClient.getDockerRepoVersion(git_dir + "/library")
+    needToUpdateRepoFlieList = gitClient.getUpdateRepoFileList(git_dir)
 
-
-    imageFile=open('image_desc.txt')
-    imageNames={}
+    imageFile = open('image_desc.txt')
+    imageNames = {}
     for imageName in imageFile.readlines():
         imageName = imageName.strip()
-        imageNames[imageName]=imageName
+        imageNames[imageName] = imageName
 
 
     # #docker client
@@ -55,36 +52,36 @@ def main():
 
     print "yeah!"
     for updateRepoName in needToUpdateRepoFlieList:
-       	print("update:"+updateRepoName)
-	if imageNames.has_key(updateRepoName)==True:
-            print updateRepoName +"is  exist in image.txt file,no need to update"
+        print("update:" + updateRepoName)
+        if imageNames.has_key(updateRepoName) == True:
+            print updateRepoName + "is  exist in image_desc file,no need to update"
             continue
 
         versions = dockerRepoVersionMaps[updateRepoName]
         for version in versions:
             if dockerClient.pullDockerRepo(updateRepoName, version):
                 imageUrl = dockerClient.tagDockerRepo(updateRepoName, version, docker_registry, docker_nickname)
-                print "imagesURL========"+imageUrl
+                print "imagesURL========" + imageUrl
                 if imageUrl != "":
                     dockerClient.pushDockerRepo(imageUrl)
             else:
                 print("docker pull repo failed: " + updateRepoName + ":" + version)
 
-        service=HttpService()
-        desc_result=service.getRepoDesc(updateRepoName)
+        service = HttpService()
+        desc_result = service.getRepoDesc(updateRepoName)
 
-        shortdesc=""
+        shortdesc = ""
         if desc_result.has_key("shortDesc"):
-            shortdesc=desc_result["shortDesc"]
-        print("shortdesc:"+shortdesc)
+            shortdesc = desc_result["shortDesc"]
+        print("shortdesc:" + shortdesc)
 
-        longdesc=""
+        longdesc = ""
         if desc_result.has_key("longDesc"):
-            longdesc=desc_result["longDesc"]
-        print("longdesc:"+longdesc)
+            longdesc = desc_result["longDesc"]
+        print("longdesc:" + longdesc)
 
         # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
-        service.synRepoDescHttps(netease_info,"library",updateRepoName,shortdesc,longdesc)
+        service.synRepoDescHttps(netease_info, "library", updateRepoName, shortdesc, longdesc)
 
 
 print("update success")
