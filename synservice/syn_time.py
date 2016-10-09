@@ -24,7 +24,7 @@ def main():
     netease_test = config["info"]["netease_test"]
     netease_liantiao = config["info"]["netease_liantiao"]
 
-    #git pull the git_repo,if no repo exist,git clone the git_repo
+    # git pull the git_repo,if no repo exist,git clone the git_repo
     gitClient = GitClient()
     gitClient.pullRepo(git_repo, git_dir)
 
@@ -58,6 +58,10 @@ def main():
             continue
 
         versions = dockerRepoVersionMaps[updateRepoName]
+        index = versions.index("latest")
+        print "index:" + index
+        if index < len(versions) / 2:
+            versions.reverse()
         for version in versions:
             if dockerClient.pullDockerRepo(updateRepoName, version):
                 imageUrl = dockerClient.tagDockerRepo(updateRepoName, version, docker_registry, docker_nickname)
