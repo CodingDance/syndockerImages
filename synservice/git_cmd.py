@@ -30,16 +30,20 @@ class GitClient:
     def getUpdateRepoFileList(self, filename):
         pwd = os.getcwd()
         print(pwd)
+	print(filename)
         updateRepoFileList = []
         if os.path.exists(filename) == True:
             os.chdir(filename)
             value = os.popen("git diff --name-status HEAD~1 HEAD~2")
-            value.readline()
             lines = value.readlines()
+	    print(lines)
             for line in lines:
+		print(line)
+		line =line.strip()
                 temp = line.rpartition("/")
-                updateRepoFileList.append(temp[3])
+                updateRepoFileList.append(temp[2])
         os.chdir(pwd)
+	print "over!"
         return updateRepoFileList;
 
 

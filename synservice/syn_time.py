@@ -53,9 +53,10 @@ def main():
         print("login error")
         exit(1)
 
-
+    print "yeah!"
     for updateRepoName in needToUpdateRepoFlieList:
-        if imageNames.has_key(updateRepoName)==True:
+       	print("update:"+updateRepoName)
+	if imageNames.has_key(updateRepoName)==True:
             print updateRepoName +"is  exist in image.txt file,no need to update"
             continue
 
