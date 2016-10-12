@@ -71,10 +71,17 @@ class GitClient:
                 if (len(line) == 0):
                     continue
                 if line.startswith("#"):
-                    continue
-                info = line.split(':')
-                version = info[0]
-                versions.append(version)
+                   continue
+                if line.__contains__("git://github.com")==True and line.__contains__("GitRepo")==False:
+                    info = line.split(':')
+                    version=info[0]
+                    versions.append(version)
+
+                if line.startswith("Tags"):
+                    info =line.split(':')
+                    versionArray=info[1].split(',')
+                    for version in versionArray:
+                        versions.append(version.strip())
                 dockerRepoVersionMaps[fileName] = versions
         return dockerRepoVersionMaps;
 
