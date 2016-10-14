@@ -4,12 +4,17 @@ from git_cmd import GitClient
 # import configparser
 from configobj import ConfigObj
 from http_service import HttpService
+import time
 
 
 __author__ = 'hzyiting'
 
 
 def main():
+    logFile=open('log.txt','w+')
+    logFile.write("======starting=======:")
+    logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
+    logFile.write("\n")
     config = ConfigObj("config.conf")
     docker_registry = config["docker"]["docker_registry"]
     docker_username = config["docker"]["docker_username"]
@@ -87,7 +92,9 @@ def main():
 
         # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
         service.synRepoDescHttps(netease_info, "library", updateRepoName, shortdesc, longdesc)
-
+        logFile.write("======update success=======:")
+        logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
+        logFile.write("\n")
 
 print("update success")
 
