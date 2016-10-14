@@ -93,10 +93,14 @@ def main():
 
         # service.synRepoDescHttp(netease_test,"library",key,shortdesc,longdesc)
         service.synRepoDescHttps(netease_info, "library", updateRepoName, shortdesc, longdesc)
-        logFile.write("======update success=======:")
-        logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
+        logFile.write("update repo:")
+        logFile.write(updateRepoName)
         logFile.write("\n")
         logFile.flush()
+    logFile.write("======update success=======:")
+    logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
+    logFile.write("\n")
+    logFile.flush()
 
 print("update success")
 
