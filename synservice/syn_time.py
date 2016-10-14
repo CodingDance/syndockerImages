@@ -15,6 +15,7 @@ def main():
     logFile.write("======starting=======:")
     logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
     logFile.write("\n")
+    logFile.flush()
     config = ConfigObj("config.conf")
     docker_registry = config["docker"]["docker_registry"]
     docker_username = config["docker"]["docker_username"]
@@ -95,6 +96,7 @@ def main():
         logFile.write("======update success=======:")
         logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
         logFile.write("\n")
+        logFile.flush()
 
 print("update success")
 
