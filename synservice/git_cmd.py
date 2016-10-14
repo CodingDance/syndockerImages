@@ -42,7 +42,7 @@ class GitClient:
         updateRepoFileList = []
         if os.path.exists(filename) == True:
             os.chdir(filename)
-            value = os.popen("git diff --name-status HEAD~1 HEAD~2")
+            value = os.popen("git diff --name-status HEAD~1 HEAD~10")
             lines = value.readlines()
             print(lines)
             for line in lines:
