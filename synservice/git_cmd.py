@@ -47,9 +47,10 @@ class GitClient:
             print(lines)
             for line in lines:
                 print(line)
-                line = line.strip()
-                temp = line.rpartition("/")
-                updateRepoFileList.append(temp[2])
+                if line.__contains__("library/"):
+                    line = line.strip()
+                    temp = line.rpartition("/")
+                    updateRepoFileList.append(temp[2])
         os.chdir(pwd)
         print "over!"
         return updateRepoFileList;
