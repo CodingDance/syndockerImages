@@ -11,7 +11,7 @@ __author__ = 'hzyiting'
 
 
 def main():
-    logFile=open('log.txt','w+')
+    logFile=open('log.txt','a')
     logFile.write("======starting=======:")
     logFile.write(time.strftime("%Y-%m-%d %X", time.localtime()))
     logFile.write("\n")
